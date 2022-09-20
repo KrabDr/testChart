@@ -1,0 +1,26 @@
+.days-wrap{
+  display: flex;
+  width: 320px;
+  flex-wrap: wrap;
+
+  .day{
+    width: 100px;
+    &.cellWithinRange{
+      background: gray;
+      &.selected{
+        background: gray;
+      }
+    }
+
+    &.selected{
+      background: red;
+
+    }
+    &.hovered{
+      background: red;
+    }
+
+  }
+
+}
+

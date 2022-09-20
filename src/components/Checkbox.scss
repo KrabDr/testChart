@@ -1,0 +1,56 @@
+
+$checkbox-bg-default: white;
+$checkbox-border-default: transparent;
+$checkbox-bg-default-selected:  green;
+$checkbox-border-default-selected:transparent;
+
+
+.checkbox_wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  .checkbox-title{
+    padding-left:  6px;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+  }
+
+  input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+  }
+
+  .checkbox {
+    cursor: pointer;
+    position: relative;
+    width: 12px;
+    height: 12px;
+    border: 0px solid $checkbox-border-default;
+    background-color: $checkbox-bg-default;
+
+    &.isActive::after,
+    &.isIndeterminate::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 14px;
+      height: 14px;
+      transform: translate(-50%, -50%);
+    }
+
+    &.isActive {
+
+      &::after {
+        background: inherit;
+        border: 0px solid $checkbox-border-default-selected;
+      }
+
+    }
+
+
+
+
+  }
+}
