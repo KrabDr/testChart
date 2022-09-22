@@ -1,3 +1,5 @@
+import {ESeasonSummer, ESeasonWinter} from "./types";
+
 export const quarters = ["Q1: Jan-Mar", "Q2: Apr-Jun", "Q3: Jul-Sep", "Q4: Oct-Dec"];
 
 
@@ -11,6 +13,6 @@ export const seasons = ["Winter:", "Summer:"];
 
 
 export const seasonMonths = {
-    winter:[9,2],
-    summer:[8,3]
+    winter: [ESeasonWinter.start, ESeasonWinter.end],
+    summer: [ESeasonSummer.start, ESeasonSummer.end]
 }

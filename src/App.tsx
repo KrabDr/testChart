@@ -1,6 +1,6 @@
 import "./styles.css";
 import {ScoreChart} from "./ScoreChart";
-import {data1, EExternalData, externalData, ExternalSingle} from "./data";
+import {EExternalData, externalData} from "./data";
 import Legend from "./Legend";
 import React, {useState} from "react";
 import {RDatePicker} from "./components/DatePicker/components/ReactDatePicker/RDatePicker";
@@ -35,7 +35,7 @@ export default function App() {
     return (
         <div className="App">
             <h1>Chart POC</h1>
-            <DatePicker defaultStartValue={new Date()} defaultEndValue={dayjs().add(3,'month').toDate()} />
+            <DatePicker defaultStartValue={new Date()} defaultEndValue={dayjs().add(3,'month').endOf('month').toDate()} />
 
             <div className="datePicker">
 
