@@ -118,7 +118,6 @@ export const RDatePicker = () => {
                             maxDate={new Date(2031,0)}
                             date={date}
                             onChange={(value: Date[]) => {
-                                console.log(value)
                                 setDate({startDate: value[0], endDate: value[1]});
                             }}
                         />
@@ -126,9 +125,7 @@ export const RDatePicker = () => {
                     )}
                 </>
             </div>
-
         )}
-            <button type={"button"} onClick={() => openDatePicker(EOpenStates.Months)}> Open calendar</button>
         </>
     );
 };
