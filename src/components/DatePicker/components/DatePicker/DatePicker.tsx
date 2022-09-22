@@ -1,14 +1,13 @@
-import React, {FC, useEffect, useState} from "react";
-import PickerMarkup from "./PickerMarkup";
+import React, {FC, useState} from "react";
+import PickerMarkup from "./components/PickerMarkup/PickerMarkup";
 import dayjs from "dayjs";
 import {EDatePickerType, IDate, IIsSelecting} from "./types";
-import isBetween from 'dayjs/plugin/isBetween';
-
-dayjs.extend(isBetween)
-
 import quarterOfYear from 'dayjs/plugin/quarterOfYear'
-import {quarters, seasonMonths, seasons} from "./data";
-require('dayjs/plugin/quarterOfYear')
+import {formatToCurrentType} from "./utils";
+import PickerOpenButton from "./components/PickerOpenButton/PickerOpenButton";
+import PickerNavigation from "./components/PickerNavigation/PickerNavigation";
+
+
 dayjs.extend(quarterOfYear)
 
 
@@ -20,51 +19,6 @@ export interface IDatePicker {
     pickerType?: EDatePickerType
 }
 
-const formatToCurrentType = (type: EDatePickerType, date: Date, direction: 'end' | 'start') => {
-    switch (type) {
-        case EDatePickerType.Months:
-            if (direction === 'end') {
-                return dayjs(date).endOf(type).toDate()
-            }
-            return dayjs(date).startOf(type).toDate()
-        case EDatePickerType.Quarters:
-            if (direction === 'end') {
-                return dayjs(date).endOf(type).toDate()
-            }
-            return dayjs(date).startOf(type).toDate()
-        case EDatePickerType.Seasons:
-            switch (direction) {
-                case 'end':
-                    if (dayjs(date).get('month') === 9) {
-                        return dayjs(date).add(1,'year').set('month', 2).endOf('month').toDate()
-                    }
-                    return dayjs(date).set('month', 8).endOf('month').toDate()
-                case "start":
-                    return dayjs(date).startOf('month').toDate()
-            }
-
-
-    }
-}
-
-const printCorrectFormat = (type: EDatePickerType, date: Date | null) => {
-    if (!dayjs(date).isValid()) return 'Choose Date'
-    switch (type) {
-        case EDatePickerType.Months:
-            return dayjs(date).format('YYYY MMM')
-        case EDatePickerType.Quarters:
-            return `${quarters[dayjs(date).quarter() -1 ]} ${dayjs(date).format('YYYY')}`
-        case EDatePickerType.Seasons:
-            if(seasonMonths.winter.some((s)=>s === dayjs(date).get('month'))){
-                return `Winter ${dayjs(date).get('year')}  `
-            }
-            if(seasonMonths.summer.some((s)=>s === dayjs(date).get('month'))){
-                return `Summer ${dayjs(date).get('year')}  `
-            }
-            return 'Choose Date'
-    }
-}
-
 
 export const DatePicker: FC<IDatePicker> = ({
                                                 defaultStartValue = null,
@@ -74,7 +28,6 @@ export const DatePicker: FC<IDatePicker> = ({
                                                 maxDate = dayjs().add(5, 'year').endOf('year').endOf('month').toDate(),
                                             }) => {
     const [openPickerType, setOpenPickerType] = useState<EDatePickerType>(pickerType)
-
     const [isSelectingRange, setIsSelectingRange] = useState<IIsSelecting>({
         isStartDateSelected: false,
         isEndDateSelected: false,
@@ -84,10 +37,6 @@ export const DatePicker: FC<IDatePicker> = ({
     const [date, setDate] = useState<IDate>({
         startDate: defaultStartValue,
         endDate: defaultEndValue
-    })
-    const [hoverDate, setHoverDate] = useState<IDate>({
-        startDate: null,
-        endDate: null
     })
 
     const onSelectDate = (value: Date | null) => {
@@ -100,39 +49,20 @@ export const DatePicker: FC<IDatePicker> = ({
                 isStartDateSelected: false,
                 isEndDateSelected: true
             })
-        } else {
-            setDate((prevValue) => {
-                return ({
-                    startDate: dayjs(prevValue.startDate).isBefore(value) ? prevValue.startDate : value,
-                    endDate: dayjs(prevValue.startDate).isBefore(value) ? formatToCurrentType(openPickerType, value!, 'end') : formatToCurrentType(openPickerType, prevValue.startDate!, 'end')
-                })
-            })
+        }
+
+        if (isSelectingRange.isEndDateSelected) {
+            setDate((prevValue) => ({
+                startDate: dayjs(prevValue.startDate).isBefore(value) ? prevValue.startDate : value,
+                endDate: dayjs(prevValue.startDate).isBefore(value) ? formatToCurrentType(openPickerType, value!, 'end') : formatToCurrentType(openPickerType, prevValue.startDate!, 'end')
+            }))
             setIsSelectingRange({
-                isStartDateSelected: false,
+                isStartDateSelected: true,
                 isEndDateSelected: false
             })
         }
 
     }
-
-    const onHoverDate = (value: Date | null) => {
-
-        if (isSelectingRange.isStartDateSelected) {
-            setHoverDate({
-                startDate: value,
-                endDate: null
-            })
-        } else {
-            setHoverDate((prevValue) => {
-                return ({
-                    startDate: prevValue.startDate,
-                    endDate: formatToCurrentType(openPickerType, value!, 'end')
-                })
-            })
-        }
-
-    };
-
 
     const changePickerType = (type: EDatePickerType) => {
         setIsSelectingRange({
@@ -151,83 +81,58 @@ export const DatePicker: FC<IDatePicker> = ({
             startDate: defaultStartValue,
             endDate: defaultEndValue
         })
+        setOpenPickerType(EDatePickerType.Months)
         setIsSelectingRange({
             isStartDateSelected: true,
             isEndDateSelected: false
         })
     };
 
-    // useEffect(() => {
-    //
-    // }, [openPickerType]);
 
+    const toggleOpenState = (state: boolean) => {
+        setIsSelectingRange(state ? {
+            isStartDateSelected: true,
+            isEndDateSelected: false
+        } : {
+            isStartDateSelected: false,
+            isEndDateSelected: false
+        })
+    }
 
     return (
-        <div>
-            <div
-                className="picker-button"
-                onClick={() => setIsSelectingRange({
-                    isStartDateSelected: true,
-                    isEndDateSelected: false
-                })}>
-                <div className="picker-button-start">
-                    {printCorrectFormat(openPickerType, date.startDate)}
-                </div>
-                <span>-</span>
-                <div  className="picker-button-end">
-                    {printCorrectFormat(openPickerType, date.endDate)}
-                </div>
-            </div>
+        <>
+            <PickerOpenButton date={date} type={openPickerType} onOpen={toggleOpenState}/>
 
             {isOpenPicker && (
                 <div className="pickerWrapper">
-                    <div className="pickerNavigation">
-                        <ul>
-                            <li>
-                                <button type='button'
-                                        onClick={() => changePickerType(EDatePickerType.Months)}>{EDatePickerType.Months}</button>
-                            </li>
-                            <li>
-                                <button type='button'
-                                        onClick={() => changePickerType(EDatePickerType.Quarters)}>{EDatePickerType.Quarters}</button>
-                            </li>
-                            <li>
-                                <button type='button'
-                                        onClick={() => changePickerType(EDatePickerType.Seasons)}>{EDatePickerType.Seasons}</button>
-                            </li>
-                            <li>
-                                <button type='button'
-                                        onClick={() => changeToDefault()}>Reset to default</button>
-                            </li>
-                        </ul>
+                    <div className="pickerAside">
+                        <PickerNavigation actions={[
+                            {action: () => changePickerType(EDatePickerType.Months), title: EDatePickerType.Months},
+                            {action: () => changePickerType(EDatePickerType.Quarters), title: EDatePickerType.Quarters},
+                            {action: () => changePickerType(EDatePickerType.Seasons), title: EDatePickerType.Seasons},
+                        ]}/>
+                        <button type='button' onClick={changeToDefault}>Reset to default </button>
                     </div>
                     <div className="pickers">
-
                         <PickerMarkup
                             openPickerType={openPickerType}
-                            selectingRange={isSelectingRange}
                             date={date}
-                            hoverDate={hoverDate}
                             onSelectDate={onSelectDate}
-                            onHoverDate={onHoverDate}
                             minDate={minDate}
                             maxDate={maxDate}
                         />
                         <PickerMarkup
                             openPickerType={openPickerType}
                             incrementYear={1}
-                            selectingRange={isSelectingRange}
                             date={date}
-                            hoverDate={hoverDate}
                             onSelectDate={onSelectDate}
-                            onHoverDate={onHoverDate}
                             minDate={minDate}
                             maxDate={maxDate}
                         />
                     </div>
                 </div>
             )}
-        </div>
+        </>
     )
 
 }
