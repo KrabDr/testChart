@@ -1,0 +1,16 @@
+@use '../../styles/variables' as variables;
+
+.pickerButton {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  padding: 8px 16px;
+  font: variables.$font-regular-default;
+  border: none;
+
+  &.fullWidth {
+    width: 100%;
+
+  }
+}

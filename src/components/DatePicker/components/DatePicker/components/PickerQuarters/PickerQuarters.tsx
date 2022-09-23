@@ -1,11 +1,14 @@
 import React, {FC} from "react";
 import dayjs from "dayjs";
-import classNames from "classnames";
+import classNames from "classnames/bind";
 import '../../PickerDay.scss'
-import {EDatePickerType, IPickerBase} from "../../types";
+import {EDatePickerPeriod, IPickerBase} from "../../types";
 import {quarters} from "../../data";
 import {range} from "../../../../../../utilities/utilities";
 import useActiveDateClasses from "../../hooks/UseActiveDateClasses";
+import styles from "./PickerQuarters.module.scss";
+
+const cx = classNames.bind(styles);
 
 export interface IPickerQuarter extends IPickerBase {
     quarter: number
@@ -27,16 +30,14 @@ const PickerQuarter: FC<IPickerQuarter> = ({
         date,
         currentDate,
         currentSelectionYear,
-        type:EDatePickerType.Quarters
+        type:EDatePickerPeriod.Quarters
     })
 
     return (
         <button type={"button"}
                 disabled={isDisabled}
                 onClick={() => onSelectDate(dayjs(dayjs(currentSelectionYear).quarter(quarter + 1)).toDate())}
-                className={classNames('quarter', {
-                    ...activeDateClasses,
-                })}
+                className={cx( styles.quarter, { ...activeDateClasses })}
         >
             <div>
                 {quarters[quarter]}
@@ -53,7 +54,7 @@ const PickerQuarters: FC<IPickerBase> = ({
                                              }) => {
     return (
 
-        <div className={'quarter-wrap'}>
+        <div className={styles.quartersList}>
             {range(0,3).map((quarter) => <PickerQuarter
                 date={date}
                 currentSelectionYear={currentSelectionYear}

@@ -1,0 +1,38 @@
+@use '../../styles/variables' as variables;
+
+.pickerButton {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+}
+
+.iconCalendar {
+  margin-right: 4px;
+}
+
+.pickerButtonInfo {
+  display: flex;
+  align-items: center;
+  font: variables.$font-regular-default;
+}
+
+.pickerButtonType {
+  text-transform: capitalize;
+  margin-right: 4px;
+}
+
+.iconDateArrow{
+  margin-left: 12px;
+  &.isOpen{
+    transform: rotate(180deg);
+  }
+}
+
+.pickerButtonStart{
+  margin-right: 4px;
+}
+.pickerButtonEnd{
+  margin-left: 4px;
+}

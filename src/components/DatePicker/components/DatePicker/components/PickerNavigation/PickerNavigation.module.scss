@@ -1,0 +1,15 @@
+@use '../../styles/variables' as variables;
+
+
+.pickerNavigation{
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+}
+
+.pickerNavigationButton{
+  text-transform: capitalize;
+  &.isActive{
+    background: variables.$bg-gray;
+  }
+}

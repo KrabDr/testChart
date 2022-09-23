@@ -9,7 +9,7 @@ export interface IDate {
 }
 
 
-export enum EDatePickerType {
+export enum EDatePickerPeriod {
     Months = 'months',
     Seasons = 'seasons',
     Quarters = 'quarters',

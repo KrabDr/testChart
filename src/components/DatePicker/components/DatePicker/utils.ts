@@ -1,26 +1,26 @@
 import dayjs, {Dayjs} from "dayjs";
-import {EDatePickerType, ESeason, ESeasonSummer, ESeasonWinter} from "./types";
+import {EDatePickerPeriod, ESeason, ESeasonSummer, ESeasonWinter} from "./types";
 import {months, quarters, seasonMonths} from "./data";
 
-const getEndOfCurrentDate = (currentDate: Date, type: EDatePickerType): Date => {
+const getEndOfCurrentDate = (currentDate: Date, type: EDatePickerPeriod): Date => {
     switch (type) {
-        case EDatePickerType.Months:
+        case EDatePickerPeriod.Months:
             return dayjs(currentDate).endOf('month').toDate()
-        case EDatePickerType.Quarters:
+        case EDatePickerPeriod.Quarters:
             return dayjs(currentDate).endOf('month').toDate()
-        case EDatePickerType.Seasons:
+        case EDatePickerPeriod.Seasons:
             return dayjs(currentDate).endOf('month').toDate()
     }
 }
 
-export const getIsBetween = (currentDate: Date, startDate: Date | null, endDate: Date | null, type: EDatePickerType): boolean => {
+export const getIsBetween = (currentDate: Date, startDate: Date | null, endDate: Date | null, type: EDatePickerPeriod): boolean => {
     return currentDate > startDate! && getEndOfCurrentDate(currentDate, type) < endDate!
 }
 
 
 export const toStartOfYear = (date: Date): Dayjs => {
     if (dayjs(date).get('month') === ESeasonWinter.end) {
-        return dayjs(date).add(-1, 'year').set('month', ESeasonWinter.start).startOf('month')
+        return dayjs(date).set('month', ESeasonWinter.start).startOf('month')
     }
 
     if (dayjs(date).get('month') === ESeasonSummer.end) {
@@ -41,23 +41,23 @@ export const toEndOfYear = (date: Date) => {
 }
 
 
-export const formatToCurrentType = (type: EDatePickerType, date: Date, direction: 'end' | 'start') => {
+export const formatToCurrentType = (type: EDatePickerPeriod, date: Date, direction: 'end' | 'start') => {
     switch (type) {
-        case EDatePickerType.Months:
+        case EDatePickerPeriod.Months:
             if (direction === 'end') {
                 return dayjs(date).endOf(type).toDate()
             }
             return dayjs(date).startOf(type).toDate()
-        case EDatePickerType.Quarters:
+        case EDatePickerPeriod.Quarters:
             if (direction === 'end') {
                 return dayjs(date).endOf(type).toDate()
             }
             return dayjs(date).startOf(type).toDate()
-        case EDatePickerType.Seasons:
+        case EDatePickerPeriod.Seasons:
             switch (direction) {
                 case 'end':
                     if (dayjs(date).get('month') === ESeasonWinter.start) {
-                        return dayjs(date).add(1, 'year').set('month', ESeasonWinter.end).endOf('month').toDate()
+                        return dayjs(date).set('month', ESeasonWinter.end).endOf('month').toDate()
                     }
                     return dayjs(date).set('month', ESeasonSummer.end).endOf('month').toDate()
                 case "start":
@@ -80,14 +80,14 @@ export const getFormattedSeason = (date: Date | null): string | undefined => {
 }
 
 
-export const printCorrectFormat = (type: EDatePickerType, date: Date | null) => {
+export const printCorrectFormat = (type: EDatePickerPeriod, date: Date | null) => {
     if (!dayjs(date).isValid()) return 'Choose Date'
     switch (type) {
-        case EDatePickerType.Months:
+        case EDatePickerPeriod.Months:
             return dayjs(date).format('YYYY MMM')
-        case EDatePickerType.Quarters:
+        case EDatePickerPeriod.Quarters:
             return `${quarters[dayjs(date).quarter() - 1]} ${dayjs(date).format('YYYY')}`
-        case EDatePickerType.Seasons:
+        case EDatePickerPeriod.Seasons:
             return getFormattedSeason(date) ?? 'Choose Date'
     }
 }

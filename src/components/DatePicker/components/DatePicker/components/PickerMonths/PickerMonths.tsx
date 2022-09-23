@@ -1,12 +1,15 @@
 import React, {FC} from "react";
 import dayjs from "dayjs";
-import classNames from "classnames";
+import classNames from "classnames/bind";
 import '../../PickerDay.scss'
-import {EDatePickerType, IPickerBase} from "../../types";
+import {EDatePickerPeriod, IPickerBase} from "../../types";
 import {months} from "../../data";
 import {range} from "../../../../../../utilities/utilities";
 import useActiveDateClasses from "../../hooks/UseActiveDateClasses";
 
+import styles from './PickerMonths.module.scss'
+
+const cx = classNames.bind(styles);
 
 export interface IPickerMonth extends IPickerBase {
     month: number
@@ -28,8 +31,9 @@ const PickerMonth: FC<IPickerMonth> = ({
        date,
        currentDate,
        currentSelectionYear,
-       type:EDatePickerType.Months
+       type:EDatePickerPeriod.Months,
    })
+
 
     return (
 
@@ -37,9 +41,7 @@ const PickerMonth: FC<IPickerMonth> = ({
             type="button"
             disabled={isDisabled}
             onClick={() => onSelectDate(dayjs(currentSelectionYear).set('month', month).toDate())}
-            className={classNames('day', {
-                ...activeDateClasses,
-            })}
+            className={cx( styles.month, { ...activeDateClasses })}
         >
             <div>
                 {months[month]}
@@ -56,7 +58,7 @@ const PickerMonths: FC<IPickerBase> = ({
                                              minDate
                                          }) => {
     return (
-        <div className={'days-wrap'}>
+        <div className={styles.monthList}>
             {range(0, 11).map((month) => <PickerMonth
                 date={date}
                 currentSelectionYear={currentSelectionYear}

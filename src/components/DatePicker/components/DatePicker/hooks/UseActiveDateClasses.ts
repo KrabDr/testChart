@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {EDatePickerType, IDate} from "../types";
+import {EDatePickerPeriod, IDate} from "../types";
 import {getIsBetween, toStartOfYear} from "../utils";
 import dayjs from "dayjs";
 
@@ -14,19 +14,19 @@ export interface IUseActiveDateClasses {
     date: IDate
     currentDate: Date,
     currentSelectionYear: Date,
-    type: EDatePickerType
+    type: EDatePickerPeriod
 }
 
 
-const getIsSelectedDate = (date: Date, currentDate: Date, type: EDatePickerType) => {
+const getIsSelectedDate = (date: Date, currentDate: Date, type: EDatePickerPeriod) => {
     switch (type) {
-        case EDatePickerType.Months:
+        case EDatePickerPeriod.Months:
             return dayjs(dayjs(date).startOf('month').toDate()).isSame(dayjs(currentDate).startOf('month').toDate())
-        case EDatePickerType.Quarters:
+        case EDatePickerPeriod.Quarters:
             const dateQuarter = dayjs(date).quarter(dayjs(date).quarter()).startOf('quarter').toDate()
             const currentDateQuarter = dayjs(currentDate).quarter(dayjs(currentDate).quarter()).startOf('quarter').toDate()
             return dayjs(dateQuarter).isSame(currentDateQuarter)
-        case EDatePickerType.Seasons:
+        case EDatePickerPeriod.Seasons:
             return dayjs(currentDate).isSame(toStartOfYear(date))
     }
 }

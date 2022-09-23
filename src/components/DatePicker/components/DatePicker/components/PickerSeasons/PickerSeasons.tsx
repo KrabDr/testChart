@@ -1,11 +1,14 @@
 import React, {FC} from "react";
 import dayjs from "dayjs";
-import classNames from "classnames";
+import classNames from "classnames/bind";
 import '../../PickerDay.scss'
-import {EDatePickerType, ESeason, ESeasonSummer, ESeasonWinter, IPickerBase} from "../../types";
+import {EDatePickerPeriod, ESeason, ESeasonSummer, ESeasonWinter, IPickerBase} from "../../types";
 import {range} from "../../../../../../utilities/utilities";
 import useActiveDateClasses from "../../hooks/UseActiveDateClasses";
 import {getFormattedSeason} from "../../utils";
+import styles from "./PickerSeasons.module.scss";
+
+const cx = classNames.bind(styles);
 
 
 export interface IPickerSeason extends IPickerBase {
@@ -28,15 +31,13 @@ const PickerSeason: FC<IPickerSeason> = ({
         date,
         currentDate,
         currentSelectionYear,
-        type: EDatePickerType.Seasons
+        type: EDatePickerPeriod.Seasons
     })
 
     return (
         <button type={"button"}
                 onClick={() => onSelectDate(currentDate)}
-                className={classNames('season', {
-                    ...activeDateClasses,
-                })}
+                className={cx( styles.season, { ...activeDateClasses })}
         >
             <div>
                 {getFormattedSeason(currentDate)}
@@ -53,7 +54,7 @@ const PickerSeasons: FC<IPickerBase> = ({
                                            }) => {
     return (
 
-        <div className={'season-wrap'}>
+        <div className={styles.seasonList}>
             {range(0, 1).map((season) => <PickerSeason
                 date={date}
                 currentSelectionYear={currentSelectionYear}

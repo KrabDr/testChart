@@ -1,26 +1,28 @@
 import React, {FC} from "react";
+import styles from './PickerNavigation.module.scss'
+import PickerButton from "../PickerButton/PickerButton";
+import cn from "classnames";
+import {EDatePickerPeriod} from "../../types";
 
 interface INavigationsActions {
     action: () => void,
-    title: string
+    title: EDatePickerPeriod
 }
 
 export interface IPickerNavigation {
-    actions: INavigationsActions[]
+    actions: INavigationsActions[],
+    activePeriod:EDatePickerPeriod
 }
 
 const PickerNavigation: FC<IPickerNavigation> = ({
-                                                     actions
+                                                     actions,activePeriod
                                                  }) => {
     return (
-        <ul className="pickerNavigation">
+        <div className={styles.pickerNavigation}>
             {actions.map(({action, title}) =>
-                <li>
-                    <button type='button'
-                            onClick={action}>{title}</button>
-                </li>
+                <PickerButton fullWidth classes={cn(styles.pickerNavigationButton, {[styles.isActive]:activePeriod === title})} onClick={action} text={title} />
             )}
-        </ul>
+        </div>
     )
 }
 

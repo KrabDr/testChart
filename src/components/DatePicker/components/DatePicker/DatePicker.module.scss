@@ -1,0 +1,53 @@
+@use './styles/variables' as variables;
+
+.pickerWrapper{
+  position: relative;
+}
+
+.picker {
+  position: absolute;
+  top: 25px;
+  left: 5px;
+  display: flex;
+  width: fit-content;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+  background: variables.$white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 8px;
+  z-index: 9999;
+}
+
+
+.pickerAside {
+  padding-right: 8px;
+  border-right: 1px solid variables.$line;
+  margin-right: 8px;
+}
+
+.pickerAsidePeriod {
+  font: variables.$font-small-default;
+  color: variables.$text-gray;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.resetButton{
+  margin-top: 16px;
+  color: variables.$primary-blue;
+  font: variables.$font-regular-semi-bold;
+}
+
+.pickers{
+  display: flex;
+ align-self: stretch;
+}
+
+.divider{
+  width: 1px;
+  background: variables.$line;
+  align-self: stretch;
+  margin: 0 4px;
+}

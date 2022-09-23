@@ -1,0 +1,44 @@
+@use '../../styles/variables' as variables;
+
+.monthList {
+  display: flex;
+  flex-wrap: wrap;
+  width: 280px;
+}
+
+
+.month {
+  width: 70px;
+  height: 40px;
+  cursor: pointer;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  font: variables.$font-regular-default;
+  color: variables.$black;
+
+  &:disabled {
+    pointer-events: none;
+    cursor: default;
+    color: variables.$text-gray;
+  }
+}
+
+.selected {
+  background: variables.$primary-blue;
+  color: variables.$white;
+
+  &.isStartSelected {
+    border-radius: 100px 0 0 100px;
+  }
+
+  &.isEndSelected {
+    border-radius: 0 100px 100px 0;
+  }
+}
+
+.cellWithinRange {
+  background: variables.$bg-gray;
+}

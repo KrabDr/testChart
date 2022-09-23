@@ -1,14 +1,16 @@
 import React, {FC, useState} from "react";
 import dayjs from "dayjs";
 import '../../PickerDay.scss'
-import {EDatePickerType, IDate} from "../../types";
+import {EDatePickerPeriod, IDate} from "../../types";
 import PickerHeader from "../PickerHeader/PickerHeader";
 import PickerMonths from "../PickerMonths/PickerMonths";
 import PickerQuarters from "../PickerQuarters/PickerQuarters";
 import PickerSeasons from "../PickerSeasons/PickerSeasons";
 
+import styles from './PickerMarkup.module.scss'
+
 export interface IPickerMarkup {
-    openPickerType:EDatePickerType,
+    openPickerType: EDatePickerPeriod,
     date: IDate,
     onSelectDate: (value: Date | null) => void
     incrementYear?: number,
@@ -33,46 +35,44 @@ const PickerMarkup: FC<IPickerMarkup> = ({
 
 
     return (
-        <div className={"picker"}>
-            <div >
-                <PickerHeader
-                    currentSelectionYear={currentSelectionYear}
-                    onHandleChangeYear={onHandleChangeYear}
-                    minDate={minDate}
-                    maxDate={maxDate}
-                />
+        <div className={styles.picker}>
+            <PickerHeader
+                currentSelectionYear={currentSelectionYear}
+                onHandleChangeYear={onHandleChangeYear}
+                minDate={minDate}
+                maxDate={maxDate}
+            />
 
-                <div>
-                    {openPickerType === EDatePickerType.Months && (
-                        <PickerMonths
-                            currentSelectionYear={currentSelectionYear}
-                            onSelectDate={onSelectDate}
-                            date={date}
-                            minDate={minDate}
-                            maxDate={maxDate}
-                        />
-                    )}
-                    {openPickerType === EDatePickerType.Quarters && (
-                        <PickerQuarters
-                            currentSelectionYear={currentSelectionYear}
-                            onSelectDate={onSelectDate}
-                            date={date}
-                            minDate={minDate}
-                            maxDate={maxDate}
-                        />
-                    )}
+            <div>
+                {openPickerType === EDatePickerPeriod.Months && (
+                    <PickerMonths
+                        currentSelectionYear={currentSelectionYear}
+                        onSelectDate={onSelectDate}
+                        date={date}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                    />
+                )}
+                {openPickerType === EDatePickerPeriod.Quarters && (
+                    <PickerQuarters
+                        currentSelectionYear={currentSelectionYear}
+                        onSelectDate={onSelectDate}
+                        date={date}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                    />
+                )}
 
-                    {openPickerType === EDatePickerType.Seasons && (
-                        <PickerSeasons
-                            currentSelectionYear={currentSelectionYear}
-                            onSelectDate={onSelectDate}
-                            date={date}
-                            minDate={minDate}
-                            maxDate={maxDate}
-                        />
-                    )}
+                {openPickerType === EDatePickerPeriod.Seasons && (
+                    <PickerSeasons
+                        currentSelectionYear={currentSelectionYear}
+                        onSelectDate={onSelectDate}
+                        date={date}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                    />
+                )}
 
-                </div>
             </div>
         </div>
     )

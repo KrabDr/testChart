@@ -1,0 +1,61 @@
+@use '../../styles/variables' as variables;
+
+
+.season {
+  width: 236px;
+  height: 40px;
+  cursor: pointer;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  font: variables.$font-regular-default;
+  color: variables.$black;
+
+  &:disabled {
+    pointer-events: none;
+    cursor: default;
+    color: variables.$text-gray;
+  }
+
+  &.cellWithinRange {
+    background: variables.$bg-gray;
+  }
+
+  &.selected {
+    background: variables.$primary-blue;
+    color: variables.$white;
+
+    &.isStartSelected {
+      border-radius: 100px 0 0 100px;
+    }
+
+    &.isEndSelected {
+      border-radius: 0 100px 100px 0;
+    }
+
+    &.isStartSelected.isEndSelected {
+      border-radius: 100px 100px 100px 100px;
+    }
+
+    &:has(+ .selected:nth-child(2)) {
+      border-radius: 100px 100px 0 0;
+    }
+  }
+
+  &:nth-child(1).selected + &:nth-child(2).selected {
+    border-radius: 0 0 100px 100px;
+  }
+
+
+}
+
+.seasonList {
+  display: flex;
+  flex-wrap: wrap;
+  width: 236px;
+
+}
+
+

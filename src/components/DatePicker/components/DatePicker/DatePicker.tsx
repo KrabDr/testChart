@@ -1,12 +1,13 @@
 import React, {FC, useState} from "react";
 import PickerMarkup from "./components/PickerMarkup/PickerMarkup";
 import dayjs from "dayjs";
-import {EDatePickerType, IDate, IIsSelecting} from "./types";
+import {EDatePickerPeriod, IDate, IIsSelecting} from "./types";
 import quarterOfYear from 'dayjs/plugin/quarterOfYear'
 import {formatToCurrentType} from "./utils";
 import PickerOpenButton from "./components/PickerOpenButton/PickerOpenButton";
 import PickerNavigation from "./components/PickerNavigation/PickerNavigation";
-
+import styles from './DatePicker.module.scss'
+import PickerButton from "./components/PickerButton/PickerButton";
 
 dayjs.extend(quarterOfYear)
 
@@ -16,18 +17,18 @@ export interface IDatePicker {
     defaultEndValue?: Date | null
     minDate?: Date
     maxDate?: Date
-    pickerType?: EDatePickerType
+    pickerPeriod?: EDatePickerPeriod
 }
 
 
 export const DatePicker: FC<IDatePicker> = ({
                                                 defaultStartValue = null,
                                                 defaultEndValue = null,
-                                                pickerType = EDatePickerType.Months,
+                                                pickerPeriod = EDatePickerPeriod.Months,
                                                 minDate = dayjs().startOf('month').toDate(),
                                                 maxDate = dayjs().add(5, 'year').endOf('year').endOf('month').toDate(),
                                             }) => {
-    const [openPickerType, setOpenPickerType] = useState<EDatePickerType>(pickerType)
+    const [openPickerPeriod, setOpenPickerPeriod] = useState<EDatePickerPeriod>(pickerPeriod)
     const [isSelectingRange, setIsSelectingRange] = useState<IIsSelecting>({
         isStartDateSelected: false,
         isEndDateSelected: false,
@@ -54,7 +55,7 @@ export const DatePicker: FC<IDatePicker> = ({
         if (isSelectingRange.isEndDateSelected) {
             setDate((prevValue) => ({
                 startDate: dayjs(prevValue.startDate).isBefore(value) ? prevValue.startDate : value,
-                endDate: dayjs(prevValue.startDate).isBefore(value) ? formatToCurrentType(openPickerType, value!, 'end') : formatToCurrentType(openPickerType, prevValue.startDate!, 'end')
+                endDate: dayjs(prevValue.startDate).isBefore(value) ? formatToCurrentType(openPickerPeriod, value!, 'end') : formatToCurrentType(openPickerPeriod, prevValue.startDate!, 'end')
             }))
             setIsSelectingRange({
                 isStartDateSelected: true,
@@ -64,7 +65,7 @@ export const DatePicker: FC<IDatePicker> = ({
 
     }
 
-    const changePickerType = (type: EDatePickerType) => {
+    const changePickerType = (type: EDatePickerPeriod) => {
         setIsSelectingRange({
             isStartDateSelected: true,
             isEndDateSelected: false
@@ -73,7 +74,7 @@ export const DatePicker: FC<IDatePicker> = ({
             startDate: null,
             endDate: null
         })
-        setOpenPickerType(type)
+        setOpenPickerPeriod(type)
     }
 
     const changeToDefault = () => {
@@ -81,13 +82,12 @@ export const DatePicker: FC<IDatePicker> = ({
             startDate: defaultStartValue,
             endDate: defaultEndValue
         })
-        setOpenPickerType(EDatePickerType.Months)
+        setOpenPickerPeriod(EDatePickerPeriod.Months)
         setIsSelectingRange({
             isStartDateSelected: true,
             isEndDateSelected: false
         })
     };
-
 
     const toggleOpenState = (state: boolean) => {
         setIsSelectingRange(state ? {
@@ -100,29 +100,33 @@ export const DatePicker: FC<IDatePicker> = ({
     }
 
     return (
-        <>
-            <PickerOpenButton date={date} type={openPickerType} onOpen={toggleOpenState}/>
+        <div className={styles.pickerWrapper}>
+            <PickerOpenButton date={date} type={openPickerPeriod} onOpen={toggleOpenState} isOpen={isOpenPicker}/>
 
             {isOpenPicker && (
-                <div className="pickerWrapper">
-                    <div className="pickerAside">
-                        <PickerNavigation actions={[
-                            {action: () => changePickerType(EDatePickerType.Months), title: EDatePickerType.Months},
-                            {action: () => changePickerType(EDatePickerType.Quarters), title: EDatePickerType.Quarters},
-                            {action: () => changePickerType(EDatePickerType.Seasons), title: EDatePickerType.Seasons},
+                <div className={styles.picker}>
+                    <div className={styles.pickerAside}>
+                        <div className={styles.pickerAsidePeriod}>Period</div>
+                        <PickerNavigation
+                            activePeriod={openPickerPeriod}
+                            actions={[
+                            {action: () => changePickerType(EDatePickerPeriod.Months), title: EDatePickerPeriod.Months},
+                            {action: () => changePickerType(EDatePickerPeriod.Quarters), title: EDatePickerPeriod.Quarters},
+                            {action: () => changePickerType(EDatePickerPeriod.Seasons), title: EDatePickerPeriod.Seasons},
                         ]}/>
-                        <button type='button' onClick={changeToDefault}>Reset to default </button>
+                        <PickerButton onClick={changeToDefault} text="Reset" classes={styles.resetButton} fullWidth/>
                     </div>
-                    <div className="pickers">
+                    <div className={styles.pickers}>
                         <PickerMarkup
-                            openPickerType={openPickerType}
+                            openPickerType={openPickerPeriod}
                             date={date}
                             onSelectDate={onSelectDate}
                             minDate={minDate}
                             maxDate={maxDate}
                         />
+                        <div className={styles.divider}></div>
                         <PickerMarkup
-                            openPickerType={openPickerType}
+                            openPickerType={openPickerPeriod}
                             incrementYear={1}
                             date={date}
                             onSelectDate={onSelectDate}
@@ -132,7 +136,7 @@ export const DatePicker: FC<IDatePicker> = ({
                     </div>
                 </div>
             )}
-        </>
+        </div>
     )
 
 }
