@@ -1,25 +1,44 @@
+$scrollBg: #C1C6CB;
+
+@mixin scrollbars() {
+  scrollbar-color: $scrollBg transparent;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $scrollBg;
+    border-radius: 14px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  & {
+    scrollbar-face-color: $scrollBg;
+    scrollbar-track-color: transparent;
+  }
+}
+
+
 .select {
   position: relative;
 }
 
 .dropdown {
-  position: absolute;
-  display: none;
-  top: 25px;
-  max-width: 216px;
+  display: flex;
+  max-height: 216px;
   background: #FFFFFF;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   z-index: 999;
-  left: 50%;
-  transform: translateX(-50%);
   overflow-x: hidden;
   overflow-y: auto;
+  flex-direction: column;
 
-  &.isActive {
-    display: flex;
-    flex-direction: column;
-  }
+  @include scrollbars()
 }
 
 .selectedValue {

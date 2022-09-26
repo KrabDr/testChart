@@ -6,7 +6,6 @@ import styles from './PickerOpenButton.module.scss'
 import classNames from "classnames";
 
 export interface IPickerButton {
-    onOpen: (arg: boolean) => void,
     isOpen: boolean,
     type: EDatePickerPeriod,
     date: IDate
@@ -14,13 +13,12 @@ export interface IPickerButton {
 
 const PickerOpenButton: FC<IPickerButton> = ({
                                                  isOpen,
-                                                 onOpen,
                                                  type,
                                                  date,
                                              }) => (
-    <button
+    <div
         className={styles.pickerButton}
-        onClick={() => onOpen(true)}>
+       >
         <IconCalendar className={styles.iconCalendar}/>
         <div className={styles.pickerButtonInfo}>
             <div className={styles.pickerButtonType}>{type}:</div>
@@ -35,7 +33,7 @@ const PickerOpenButton: FC<IPickerButton> = ({
         <IconDateArrow className={classNames(styles.iconDateArrow, {
             [styles.isOpen]: isOpen
         })}/>
-    </button>
+    </div>
 )
 
 export default PickerOpenButton

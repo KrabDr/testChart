@@ -1,13 +1,12 @@
 @use './styles/variables' as variables;
 
 .pickerWrapper{
-  position: relative;
+  display: flex;
+  width: fit-content;
+  margin: 0 0 16px auto;
 }
 
 .picker {
-  position: absolute;
-  top: 25px;
-  left: 5px;
   display: flex;
   width: fit-content;
   flex-direction: row;
@@ -17,7 +16,6 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 8px;
-  z-index: 9999;
 }
 
 
@@ -50,4 +48,8 @@
   background: variables.$line;
   align-self: stretch;
   margin: 0 4px;
+}
+.pickerButton{
+  position: relative;
+  display: flex;
 }

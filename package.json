@@ -16,9 +16,11 @@
     "react-calendar": "^3.9.0",
     "react-datepicker": "4.8.0",
     "react-dom": "17.0.2",
+    "react-popper-tooltip": "^4.4.2",
     "react-scripts": "^5.0.1",
     "react-use-measure": "2.0.4",
-    "sass": "^1.54.9"
+    "sass": "^1.54.9",
+    "simplebar-react": "^2.4.1"
   },
   "devDependencies": {
     "@types/react": "17.0.0",
