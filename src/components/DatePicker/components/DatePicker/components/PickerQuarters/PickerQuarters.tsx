@@ -56,6 +56,7 @@ const PickerQuarters: FC<IPickerBase> = ({
 
         <div className={styles.quartersList}>
             {range(0,3).map((quarter) => <PickerQuarter
+                key={`quarter-${quarter}`}
                 date={date}
                 currentSelectionYear={currentSelectionYear}
                 onSelectDate={onSelectDate}

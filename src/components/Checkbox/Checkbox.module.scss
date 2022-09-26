@@ -1,16 +1,16 @@
-
 $checkbox-bg-default: white;
 $checkbox-border-default: transparent;
-$checkbox-bg-default-selected:  green;
-$checkbox-border-default-selected:transparent;
+$checkbox-bg-default-selected: green;
+$checkbox-border-default-selected: transparent;
 
 
-.checkbox_wrapper {
+.checkboxWrapper {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  .checkbox-title{
-    padding-left:  6px;
+
+  .checkboxTitle {
+    padding-left: 6px;
     text-decoration: underline;
     text-decoration-style: dashed;
   }
@@ -26,7 +26,7 @@ $checkbox-border-default-selected:transparent;
     position: relative;
     width: 12px;
     height: 12px;
-    border: 0px solid $checkbox-border-default;
+    border: 0 solid $checkbox-border-default;
     background-color: $checkbox-bg-default;
 
     &.isActive::after,
@@ -44,13 +44,9 @@ $checkbox-border-default-selected:transparent;
 
       &::after {
         background: inherit;
-        border: 0px solid $checkbox-border-default-selected;
+        border: 0 solid $checkbox-border-default-selected;
       }
 
     }
-
-
-
-
   }
 }

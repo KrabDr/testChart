@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import React, {ChangeEvent, CSSProperties} from "react";
-import "./Checkbox.scss";
+import React, {ChangeEvent} from "react";
+import styles from "./Checkbox.module.scss";
 
 export interface ICheckbox {
     id?: string;
@@ -15,7 +15,7 @@ export interface ICheckbox {
 export const Checkbox = React.forwardRef<HTMLInputElement, ICheckbox>(
     ({ id, checked, onChange, name, disabled,title,bgColor, ...rest }, ref) => {
         return (
-            <label className={"checkbox_wrapper"} htmlFor={id} data-testid={`checkbox-${id}`}>
+            <label className={styles.checkboxWrapper} htmlFor={id} data-testid={`checkbox-${id}`}>
                 <input
                     ref={ref}
                     type="checkbox"
@@ -27,12 +27,12 @@ export const Checkbox = React.forwardRef<HTMLInputElement, ICheckbox>(
                     {...rest}
                 />
                 <div
-                    className={classNames("checkbox", { isActive: checked })}
+                    className={classNames(styles.checkbox, { isActive: checked })}
                     style={{backgroundColor: checked ? bgColor : undefined }}
                 >
 
                 </div>
-                <div className='checkbox-title'>
+                <div className={styles.checkboxTitle}>
                     {title}
                 </div>
             </label>

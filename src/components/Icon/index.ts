@@ -1,1 +1,1 @@
-export * from './Icon.module.scss'
+export * from './Icon'

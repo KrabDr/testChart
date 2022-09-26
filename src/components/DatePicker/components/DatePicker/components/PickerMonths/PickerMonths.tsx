@@ -60,6 +60,7 @@ const PickerMonths: FC<IPickerBase> = ({
     return (
         <div className={styles.monthList}>
             {range(0, 11).map((month) => <PickerMonth
+                key={`month-${month}`}
                 date={date}
                 currentSelectionYear={currentSelectionYear}
                 onSelectDate={onSelectDate}

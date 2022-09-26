@@ -5,6 +5,11 @@
 #root {
     z-index: 111;
 }
+body{
+    padding: 40px ;
+    background: #E5E5E5;
+
+}
 
 .tooltip {
     position: absolute;
@@ -44,33 +49,5 @@
     padding-right: 32px;
 }
 
-.legend {
-    width: 120px;
-    font-size: 12px;
-}
 
-.axisTextLeft {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 20px;
 
-}
-
-.axisTextRight {
-    position: absolute;
-    width: 100%;
-text-align: center;
-    bottom: 15px;
-    left: 0;
-    right: 0;
-    transform: translateY(100%);
-}
-
-.axisTextLeft .text {
-    writing-mode: vertical-lr;
-    transform: rotate(-180deg);
-}

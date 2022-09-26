@@ -20,7 +20,7 @@ const PickerNavigation: FC<IPickerNavigation> = ({
     return (
         <div className={styles.pickerNavigation}>
             {actions.map(({action, title}) =>
-                <PickerButton fullWidth classes={cn(styles.pickerNavigationButton, {[styles.isActive]:activePeriod === title})} onClick={action} text={title} />
+                <PickerButton key={title} fullWidth classes={cn(styles.pickerNavigationButton, {[styles.isActive]:activePeriod === title})} onClick={action} text={title} />
             )}
         </div>
     )

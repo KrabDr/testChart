@@ -56,6 +56,7 @@ const PickerSeasons: FC<IPickerBase> = ({
 
         <div className={styles.seasonList}>
             {range(0, 1).map((season) => <PickerSeason
+                key={`season-${season}`}
                 date={date}
                 currentSelectionYear={currentSelectionYear}
                 onSelectDate={onSelectDate}

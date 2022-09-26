@@ -1,9 +1,10 @@
 import React from "react";
 import * as d3 from "d3";
 import useMeasure from "react-use-measure";
-import {Tooltip} from "./Tooltip";
-import {Axis, Orient} from "./Axis";
-import {ExternalDataType} from "./data";
+import {Tooltip} from "../Tooltip/Tooltip";
+import {Axis, Orient} from "../Axis";
+import {ExternalDataType} from "../../data";
+import styles from './ScoreChart.module.scss';
 
 
 const defaultMargin = {top: 50, left: 50, right: 50, bottom: 50};
@@ -60,16 +61,16 @@ export const ScoreChart: React.FC<Props> = ({data, margin: incomingMargin, axisT
 
 
     return (
-        <div      style={{width: '100%', height: '100%', position: 'relative', padding:'0 20px 20px 20px'}} >
+        <div  className={styles.chart}  >
             {axisText?.left && (
-                <span className='axisTextLeft'><span className="text">{axisText?.left}</span></span>
+                <span className={styles.axisTextLeft}><span className={styles.text}>{axisText?.left}</span></span>
             )}
             {axisText?.bottom && (
-                <span className={"axisTextRight"}>{axisText?.bottom}</span>
+                <span className={styles.axisTextRight}>{axisText?.bottom}</span>
             )}
             <div
                 ref={ref}
-                style={{width: '100%', height: '100%', position: 'relative'}}
+                className={styles.chartCanvas}
             >
 
                 <svg
@@ -86,7 +87,6 @@ export const ScoreChart: React.FC<Props> = ({data, margin: incomingMargin, axisT
                             <Axis scale={y} orient={Orient.left} tickSize={-availableArea.width} tickSizeOuter={0} tickValues={[0,25,50,75,100]}/>
                         </g>
                         <rect
-                            className="frame"
                             width={availableArea.width}
                             height={availableArea.height}
                             fill="none"
@@ -97,7 +97,6 @@ export const ScoreChart: React.FC<Props> = ({data, margin: incomingMargin, axisT
                         {data.map((item) =>
                             <path
                                 key={item.name}
-                                className="line"
                                 d={line(item.data)!}
                                 fill="none"
                                 strokeWidth="2"

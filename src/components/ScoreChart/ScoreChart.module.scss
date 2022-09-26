@@ -1,0 +1,40 @@
+.axisTextLeft {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 20px;
+}
+
+.axisTextRight {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+}
+
+.axisTextLeft .text {
+  writing-mode: vertical-lr;
+  transform: rotate(-180deg);
+}
+
+.chart {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  padding: 0 20px 20px 20px;
+}
+
+.chartCanvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 120px;
+
+}
+
