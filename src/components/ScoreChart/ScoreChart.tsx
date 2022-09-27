@@ -3,11 +3,11 @@ import * as d3 from "d3";
 import useMeasure from "react-use-measure";
 import {Tooltip} from "../Tooltip/Tooltip";
 import {Axis, Orient} from "../Axis";
-import {ExternalDataType} from "../../data";
+import {ExternalDataType} from "../../scoreChartData";
 import styles from './ScoreChart.module.scss';
 
 
-const defaultMargin = {top: 50, left: 50, right: 50, bottom: 50};
+const defaultMargin = {top: 20, left: 20, right: 20, bottom: 20};
 
 interface Point {
     month: string;
@@ -30,7 +30,7 @@ interface Props {
 export const ScoreChart: React.FC<Props> = ({data, margin: incomingMargin, axisText}) => {
     const [ref, bounds] = useMeasure({debounce: 50});
     const svgRef = React.useRef<SVGSVGElement>(null);
-    const [currentHover, setCurrentHover] = React.useState<Point | null>(null);
+    const [currentHover, setCurrentHover] = React.useState<{data:Point, name:string, color:string} | null>(null);
     const margin = {...defaultMargin, ...incomingMargin};
     const availableArea = {
         width: bounds.width - margin.left - margin.right,
@@ -104,8 +104,9 @@ export const ScoreChart: React.FC<Props> = ({data, margin: incomingMargin, axisT
                             />)}
 
                         <g className="dots">
-                            { data.map((points) => points.data.map((point) => {
-                                return (<circle
+                            { data.map((points) => points.data.map((point) =>
+                                (
+                                    <circle
                                         key={`point-${points.name}-${point.month}`}
                                         r="4"
                                         cx={x(point.month)}
@@ -113,21 +114,26 @@ export const ScoreChart: React.FC<Props> = ({data, margin: incomingMargin, axisT
                                         fill={"#ffffff"}
                                         stroke={points.color}
                                         strokeWidth={1.5}
-                                        onMouseMove={() => setCurrentHover(point)}
+                                        onMouseMove={() => setCurrentHover({data: point, name: points.name, color:points.color})}
                                         onMouseLeave={() => setCurrentHover(null)}
                                     />
-                                );
-                            }))}
+                                )))}
                         </g>
                     </g>
                 </svg>
                 {currentHover ? (
-                    <Tooltip style={{top: "-5px"}}
-                             left={x(currentHover.month!)! + margin.left + "px"}
-                             top={y(currentHover.score) + margin.top + "px"}>
-                        <div>
-                            <div>{currentHover.month}</div>
-                            <div>{currentHover.score}</div>
+                    <Tooltip classes={styles.tooltip}
+                             left={x(currentHover.data.month!)! + margin.left + "px"}
+                             top={y(currentHover.data.score) + margin.top + "px"}>
+                        <div className={styles.tooltipTitle}>{currentHover.data.month}</div>
+
+                        <div className={styles.info}>
+                            <div className={styles.infoMain}>
+                                <div className={styles.infoColor} style={{backgroundColor:currentHover.color}}/>
+                                <div className={styles.infoName}>{currentHover.name}</div>
+                            </div>
+
+                            <div className={styles.infoScore}>{currentHover.data.score}</div>
                         </div>
                     </Tooltip>
                 ) : null}

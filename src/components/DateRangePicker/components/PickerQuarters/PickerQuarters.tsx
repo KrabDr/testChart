@@ -1,10 +1,9 @@
 import React, {FC} from "react";
 import dayjs from "dayjs";
 import classNames from "classnames/bind";
-import '../../PickerDay.scss'
 import {EDatePickerPeriod, IPickerBase} from "../../types";
 import {quarters} from "../../data";
-import {range} from "../../../../../../utilities/utilities";
+import {range} from "../../../../utilities/utilities";
 import useActiveDateClasses from "../../hooks/UseActiveDateClasses";
 import styles from "./PickerQuarters.module.scss";
 

@@ -1,10 +1,10 @@
 import React, {FC} from "react";
 import dayjs from "dayjs";
-import {range} from "../../../../../../utilities/utilities";
+import {range} from "../../../../utilities/utilities";
 import styles from './PickerHeader.module.scss';
-import IconButton from "../../../../../IconButton/IconButton";
+import IconButton from "../../../IconButton/IconButton";
 import {IconLeftArrow, IconRightArrow} from "../../assests";
-import Select, {IOption} from "../../../../../Select/Select";
+import Select, {IOption} from "../../../Select/Select";
 
 export interface IPickerHeader {
     currentSelectionYear: Date,

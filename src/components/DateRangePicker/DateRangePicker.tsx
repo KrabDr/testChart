@@ -6,10 +6,10 @@ import quarterOfYear from 'dayjs/plugin/quarterOfYear'
 import {formatToCurrentType} from "./utils";
 import PickerOpenButton from "./components/PickerOpenButton/PickerOpenButton";
 import PickerNavigation from "./components/PickerNavigation/PickerNavigation";
-import styles from './DatePicker.module.scss'
 import PickerButton from "./components/PickerButton/PickerButton";
-import PopperWrapper from "../../../PopperWrapper/PopperWrapper";
-import {useOnClickOutside} from "../../../../hooks/UseOnClickOutside";
+import PopperWrapper from "../PopperWrapper/PopperWrapper";
+import {useOnClickOutside} from "../../hooks/UseOnClickOutside";
+import styles from './DateRangePicker.module.scss'
 
 dayjs.extend(quarterOfYear)
 
@@ -23,7 +23,7 @@ export interface IDatePicker {
 }
 
 
-export const DatePicker: FC<IDatePicker> = ({
+export const DateRangePicker: FC<IDatePicker> = ({
                                                 defaultStartValue = null,
                                                 defaultEndValue = null,
                                                 pickerPeriod = EDatePickerPeriod.Months,
@@ -165,4 +165,4 @@ export const DatePicker: FC<IDatePicker> = ({
     )
 }
 
-export default DatePicker
+export default DateRangePicker

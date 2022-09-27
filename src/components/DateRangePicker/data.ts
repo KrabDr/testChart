@@ -9,9 +9,6 @@ export const months = [
     "Jul", "Aug", "Sep",
     "Oct", "Nov", "Dec"];
 
-export const seasons = ["Winter:", "Summer:"];
-
-
 export const seasonMonths = {
     winter: [ESeasonWinter.start, ESeasonWinter.end],
     summer: [ESeasonSummer.start, ESeasonSummer.end]

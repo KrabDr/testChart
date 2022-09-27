@@ -1,5 +1,5 @@
 import {Checkbox} from "../Checkbox";
-import {EExternalData} from "../../data";
+import {EExternalData} from "../../scoreChartData";
 import styles from './Legend.module.scss'
 
 export interface ILegendComponent<T extends string> {
@@ -13,6 +13,14 @@ export interface ILegend<T> {
     name: T,
     title: EExternalData
 }
+
+
+export interface ILegendsData {
+    name:string,
+    color:string,
+}
+
+
 
 type Entries<T> = { [K in keyof T]: [K, T[K]] }[keyof T];
 function ObjectEntries<T extends object>(t: T): Entries<T>[] {

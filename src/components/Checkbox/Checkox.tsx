@@ -27,7 +27,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, ICheckbox>(
                     {...rest}
                 />
                 <div
-                    className={classNames(styles.checkbox, { isActive: checked })}
+                    className={classNames(styles.checkbox, { [styles.isActive]: checked })}
                     style={{backgroundColor: checked ? bgColor : undefined }}
                 >
 

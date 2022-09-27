@@ -1,7 +1,5 @@
 $checkbox-bg-default: white;
-$checkbox-border-default: transparent;
-$checkbox-bg-default-selected: green;
-$checkbox-border-default-selected: transparent;
+$checkbox-border-default: black;
 
 
 .checkboxWrapper {
@@ -26,8 +24,8 @@ $checkbox-border-default-selected: transparent;
     position: relative;
     width: 12px;
     height: 12px;
-    border: 0 solid $checkbox-border-default;
-    background-color: $checkbox-bg-default;
+    border: 1px solid $checkbox-border-default;
+    background-color: transparent;
 
     &.isActive::after,
     &.isIndeterminate::after {
@@ -41,12 +39,13 @@ $checkbox-border-default-selected: transparent;
     }
 
     &.isActive {
-
+      border: 1px solid transparent;
       &::after {
         background: inherit;
-        border: 0 solid $checkbox-border-default-selected;
+        border: 0 solid transparent;
       }
 
     }
+
   }
 }

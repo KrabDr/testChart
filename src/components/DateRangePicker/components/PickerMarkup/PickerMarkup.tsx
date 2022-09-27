@@ -1,6 +1,5 @@
 import React, {FC, useState} from "react";
 import dayjs from "dayjs";
-import '../../PickerDay.scss'
 import {EDatePickerPeriod, IDate} from "../../types";
 import PickerHeader from "../PickerHeader/PickerHeader";
 import PickerMonths from "../PickerMonths/PickerMonths";

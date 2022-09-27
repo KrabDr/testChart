@@ -1,32 +1,15 @@
 import "./styles.css";
 import {ScoreChart} from "./components/ScoreChart";
-import {EExternalData, externalData} from "./data";
+import {EExternalData, externalData} from "./scoreChartData";
 import Legend, {ILegend} from "./components/Legend/Legend";
 import React, {useState} from "react";
-import {DatePicker} from "./components/DatePicker/components/DatePicker/DatePicker";
+import {DateRangePicker} from "./components/DateRangePicker/DateRangePicker";
 import dayjs from "dayjs";
 import {ETabsMode, Tabs, TabWrapper} from "./components/Tabs";
 import Card from "./components/Card/Card";
+import {convertToLegends} from "./components/Legend/utils";
 
 export type ILegendName = 'Base' | 'Peak' | 'ExtendedPeak'
-
-interface ILegendsData {
-    name:string,
-    color:string,
-}
-
-const convertToLegends = <E extends any,T extends ILegendsData[] = ILegendsData[]>(data:T,titles: E | any)=>{
-   return data.reduce<Record<string, any>>((acc, value) => {
-       return {
-           ...acc, [value.name]: {
-               isActive: true,
-               name: value.name,
-               title: titles[value.name],
-               color: value.color
-           }
-       }
-   }, {})
-}
 
 export default function App() {
     const [legends, setLegends] = useState<Record<ILegendName, ILegend<ILegendName>>>(convertToLegends(externalData,EExternalData))
@@ -41,7 +24,7 @@ export default function App() {
             <Tabs title="External market view" mode={ETabsMode.Primary}>
                 <TabWrapper tabName={'Power'} >
                     <Card>
-                        <DatePicker defaultStartValue={new Date()} defaultEndValue={dayjs().add(3,'month').endOf('month').toDate()} />
+                        <DateRangePicker defaultStartValue={new Date()} defaultEndValue={dayjs().add(3,'month').endOf('month').toDate()} />
                         <div
                             className={'chartWrapper'}
                         >
@@ -63,7 +46,7 @@ export default function App() {
                 </TabWrapper>
                 <TabWrapper tabName={'Biomass'} >
                   <Card>
-                      <DatePicker defaultStartValue={new Date()} defaultEndValue={dayjs().add(3,'month').endOf('month').toDate()} />
+                      <DateRangePicker defaultStartValue={new Date()} defaultEndValue={dayjs().add(3,'month').endOf('month').toDate()} />
                       <div
                           className={'chartWrapper'}
                       >

@@ -5,26 +5,36 @@ import classNames from "classnames";
 import * as PopperJS from "@popperjs/core";
 import "react-popper-tooltip/dist/styles.css";
 import styles from "./PopperWrapper.module.scss";
+import {TriggerType} from "react-popper-tooltip/dist/types";
 
 export interface IPopper {
     popper: ReactElement;
     popperClasses?: string;
     placement?: PopperJS.Placement;
-    visible: boolean,
+    visible?: boolean,
+    interactive?: boolean,
     closeOnOutsideClick?: boolean,
-    onVisibleChange: ((state: boolean) => void) | undefined
+    trigger?: TriggerType,
+    onVisibleChange?: ((state: boolean) => void) | undefined
 }
 
 const PopperWrapper: FC<PropsWithChildren<IPopper>> = ({
-                                                           children, visible,
-                                                           onVisibleChange, popperClasses,closeOnOutsideClick=false, popper, placement = "top"
+                                                           children,
+                                                           visible,
+                                                           onVisibleChange,
+                                                           popperClasses,
+                                                           closeOnOutsideClick=false,
+                                                           popper,
+                                                           placement = "top",
+                                                           trigger='click',
+                                                           interactive=true
                                                        }) => {
 
 
     const {getTooltipProps, setTooltipRef, setTriggerRef} = usePopperTooltip({
         placement: placement,
-        trigger: 'click',
-        interactive: true,
+        trigger: trigger,
+        interactive: interactive,
         visible: visible,
         closeOnOutsideClick: closeOnOutsideClick,
         onVisibleChange: onVisibleChange,

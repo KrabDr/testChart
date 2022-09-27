@@ -1,9 +1,8 @@
 import React, {FC} from "react";
 import dayjs from "dayjs";
 import classNames from "classnames/bind";
-import '../../PickerDay.scss'
 import {EDatePickerPeriod, ESeason, ESeasonSummer, ESeasonWinter, IPickerBase} from "../../types";
-import {range} from "../../../../../../utilities/utilities";
+import {range} from "../../../../utilities/utilities";
 import useActiveDateClasses from "../../hooks/UseActiveDateClasses";
 import {getFormattedSeason} from "../../utils";
 import styles from "./PickerSeasons.module.scss";
